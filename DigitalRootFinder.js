@@ -1,6 +1,8 @@
 class DigitalRootFinder {
-    constructor(num) {
+    constructor(num,digitalRootNumber = null,logging = false) {
         this.num = num; // number, letters, array numbers
+        this.digitalRootNumber = digitalRootNumber;
+        this.logging = logging;
     }
   
     calcNumberDigitalRoot(){
@@ -8,8 +10,9 @@ class DigitalRootFinder {
             console.log('Supplied type is not a Number!');
             return false;
         }
-            
-        console.log('Summing up all the digits to find the digital root number of: '+ this.num);
+        if(this.logging){    
+            console.log('Summing up all the digits to find the digital root number of: '+ this.num);
+        }
         let digitalRoot= 0;
         
         let splitNum = this.num.toString();
@@ -35,7 +38,9 @@ class DigitalRootFinder {
             
         let arrNum = this.num;
         // num = 19
-        console.log('Collaboratively summing up to find the digital root number of: '+ arrNum.toString());
+        if(this.logging){
+            console.log('Collaboratively summing up to find the digital root number of: '+ arrNum.toString());
+        }
         let digitalRoot= 0;
         
         digitalRoot = arrNum.reduce( (previousValue, currentValue) => previousValue + currentValue, 0 );
@@ -51,8 +56,9 @@ class DigitalRootFinder {
     individualNameDigitalRoot(){
         const alpha = Array.from(Array(26)).map((e,i) => i + 65);
         const alphabet = alpha.map((x) => String.fromCharCode(x));
-        
-        console.log('Breaking letters from name to find the digital root number of: '+ this.num);
+        if(this.logging){
+            console.log('Breaking letters from name to find the digital root number of: '+ this.num);
+        }
       
         let nameArray = [...this.num.toUpperCase()+'']; //force the string to uppercase
         
@@ -68,17 +74,41 @@ class DigitalRootFinder {
         }
         return digitalRoot;
     }
+    
+    numbersEndingWithDigitalRoot(){
+        let maxNumber = this.num;
+        if(maxNumber <= 10){
+            console.log('Please input number greater than 10');
+            return false;
+        }
+        if(this.digitalRootNumber <= 0 || this.digitalRootNumber >= 10){
+            console.log('Please select the digital root number between 1 and 9');
+            return false;
+        }
+        let result = [];
+        for(var i = 0; i <= maxNumber; i++){
+            this.num = i;
+            let res = this.calcNumberDigitalRoot();
+            if(res === this.digitalRootNumber){
+               result.push(i);
+            }
+        }
+        return result;
+    }
 }
 
 /** // OUTPUT **/
 const digitalRoot = new DigitalRootFinder('asdf');
 console.log(digitalRoot.calcNumberDigitalRoot());
 
-const digitalRoot2 = new DigitalRootFinder([10,15,8,14,4,15,5]);
+const digitalRoot2 = new DigitalRootFinder([10,15,8,14,4,15,5],null,true);
 console.log(digitalRoot2.calcArrayDigitalRoot());
 
 const digitalRoot3 = new DigitalRootFinder('JOHNDOE');  // UPPERCASE 
 console.log(digitalRoot3.individualNameDigitalRoot());
 
-const digitalRoot4 = new DigitalRootFinder('johndoe');  // LOWERCASE
+const digitalRoot4 = new DigitalRootFinder('johndoe',null,true);  // LOWERCASE
 console.log(digitalRoot4.individualNameDigitalRoot());
+
+const nikolaNumber = new DigitalRootFinder(50,9);
+console.log(nikolaNumber.numbersEndingWithDigitalRoot());
