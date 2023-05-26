@@ -23,9 +23,9 @@ function convertToRange(array $array){
 			$end = $val;
 		}else{
 			if($start == $end){
-				array_push($range,$start. '-' .$start); //if there is no increment
+				array_push($range,$start. '-' .$start); // if there is no increment
 			}else{
-				array_push($range,$start.'-'.$end); //if has incremental value
+				array_push($range,$start.'-'.$end); // if has next incremental value
 			}
 			$start = $val;
 			$end = $val;
@@ -34,9 +34,9 @@ function convertToRange(array $array){
 	
 	if(!is_null($start)){
 		if($start == $end){
-			array_push($range,$start. '-' .$start); //if there is no increment
+			array_push($range,$start. '-' .$start); // if there is no increment
 		}else{
-			array_push($range,$start. '-' . $end); //if has incremental value
+			array_push($range,$start. '-' . $end); // if has next incremental value
 		}
 		
 	}
@@ -44,5 +44,7 @@ function convertToRange(array $array){
 	return json_encode($range);
 }
 
-
 echo convertToRange($arrayValues);
+
+// Output:
+// ["170-176","178-179","181-182","184-185","192-193","272-272"]
